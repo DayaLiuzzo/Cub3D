@@ -1,40 +1,18 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/07 15:41:57 by dliuzzo           #+#    #+#              #
-#    Updated: 2024/05/30 14:43:54 by dliuzzo          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 NAME = Cub3D
 
 S = src/
-
-I = inc/
-
-L = libft/
-
 O = obj/
-
+L = libft/
+I = inc/
 D = dep/
+M = minilibx-linux/
 
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -g3
-
-ifeq ($(MAKECMDGOALS), debug)
-CFLAGS += -g3
-#CFLAGS += -fsanitize=address
-endif
-
-CFLAGS += -I $I
-
-LDFLAGS = -L$L -lft
+LDFLAGS = -L$L -lft -L$M -lmlx -lXext -lX11 -lm
+CFLAGS	+=	-I$I -I$L$I -I$M
 
 SRCS =	$Smain.c \
 		$Scheck_file.c \
@@ -44,11 +22,14 @@ SRCS =	$Smain.c \
 		$Sget_next_line.c \
 		$Sget_next_line_utils.c \
 		$Scheck_file_path.c \
-		$Scheck_map.c 
+		$Scheck_map.c \
+		$Splayer_move.c \
+		$Srayon.c \
+		$Srender.c
 		
 #		$(addprefix $S, examplefolder/)
 
-RM	=	rm -rf
+RM	=	/bin/rm -rf
 
 OBJS =	$(SRCS:$S%=$O%.o)
 
@@ -57,48 +38,48 @@ DEP =	$(SRCS:$S%=$D%.d)
 all : lib $(NAME)
 
 $O:
-	mkdir -p $@
+	@mkdir -p $@
 
 $(OBJS): | $O
 
 $(OBJS): $O%.o: $S%
-#	mkdir -p $@
-	$(CC) $(CFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $D:
-	mkdir -p $@
+	@mkdir -p $@
 
 $(DEP): | $D
 
 $(DEP): $D%.d: $S%
-#	mkdir -p $@
-	$(CC) $(CFLAGS) -MM -MF $@ -MT "$O$*.o $@" $<
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -MM -MF $@ -MT "$O$*.o $@" $<
 
-include $(DEP)
 
-$(NAME) : $(OBJS) $(DEP)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS) -lreadline
+$(NAME): $(OBJS) $(DEP)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 lib:
-	make -C $L
-	
-debug: all
+	@make -C $L 
+	@make -C $M 
 
 cleanobjs:
 	$(RM) $(OBJS) $(O)
-
-lclean:
-	make fclean -C libft/
 
 cleandep: 
 	$(RM) $(DEP) $(D)
 
 clean: cleanobjs cleandep
 
+lclean:
+	@make clean -C minilibx-linux/
+	@make fclean -C libft/
+
 fclean : clean lclean
 	$(RM) $(NAME)
-#	$(RM) $(NAME)_bonus
 
 re: fclean all
+
+include $(DEP)
 
 .PHONY: all clean fclean lclean re debug lib

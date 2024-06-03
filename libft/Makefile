@@ -6,7 +6,7 @@
 #    By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/10 15:36:07 by dliuzzo           #+#    #+#              #
-#    Updated: 2024/03/27 16:36:45 by dliuzzo          ###   ########.fr        #
+#    Updated: 2024/06/03 19:47:40 by dliuzzo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,17 +40,17 @@ INC = -I includes/
 all : $(NAME)
 
 $(NAME) : $(SRCO)
-	ar rc $(NAME) $(SRCO)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(SRCO)
+	@ranlib $(NAME)
 
 %.o : %.c
-	cc $(FLAG) -c $< -o $@ $(INC)
+	@cc $(FLAG) -c $< -o $@ $(INC)
 
 clean :
-	/bin/rm -f $(SRCO)
+	@/bin/rm -f $(SRCO)
 
 fclean : clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME) 
 
 re :
 	make fclean
