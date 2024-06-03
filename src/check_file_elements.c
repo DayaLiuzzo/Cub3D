@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:34:52 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/05/29 18:10:01 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/05/30 18:37:26 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	check_color(char *line, t_file *file, char *color)
 	char	*rgb;
 	int		i;
 
+	if(is_present(color, file) == 1)
+		parse_error("Invalid characters", file);
 	i = 0;
 	new = ft_split(line, ' ');
 	while (new[i])
@@ -126,4 +128,21 @@ int	all_elements_valid(t_file *file)
 	if (file->C_color == NULL)
 		return (0);
 	return (1);
+}
+
+int is_element(char *cardinal)
+{
+	if (cardinal[0] == 'N')
+		return (1);
+	if (cardinal[0] == 'S')
+		return (1);
+	if (cardinal[0] == 'W')
+		return (1);
+	if (cardinal[0] == 'E')
+		return (1);
+	if (cardinal[0] == 'C')
+		return (1);
+	if (cardinal[0] == 'F')
+		return (1);
+	return (0);
 }

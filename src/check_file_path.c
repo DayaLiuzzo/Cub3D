@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 17:27:52 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/05/29 18:11:00 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/05/30 17:36:42 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,31 @@ int	check_path(char *path, t_file *file, char *cardinal)
 	return (1);
 }
 
+int is_present(char *cardinal, t_file *file)
+{
+	if (cardinal[0] == 'N' && file->NO_text_path != NULL)
+		return (1);
+	if (cardinal[0] == 'S' && file->SO_text_path != NULL)
+		return (1);
+	if (cardinal[0] == 'W' && file->WE_text_path != NULL)
+		return (1);
+	if (cardinal[0] == 'E' && file->EA_text_path != NULL)
+		return (1);
+	if (cardinal[0] == 'C' && file->C_color != NULL)
+		return (1);
+	if (cardinal[0] == 'F' && file->F_color != NULL)
+		return (1);
+	return (0);
+}
+
 void	check_texture_path(char *line, t_file *file, char *cardinal)
 {
 	char	**new;
 	char	*path;
 	int		i;
-
+	
+	if(is_present(cardinal, file) == 1)
+		parse_error("too many textures", file);
 	i = 0;
 	new = ft_split(line, ' ');
 	while (new[i])

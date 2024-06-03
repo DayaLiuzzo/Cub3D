@@ -6,7 +6,7 @@
 #    By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 15:41:57 by dliuzzo           #+#    #+#              #
-#    Updated: 2024/05/29 17:28:21 by dliuzzo          ###   ########.fr        #
+#    Updated: 2024/05/30 14:43:54 by dliuzzo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRCS =	$Smain.c \
 		$Sutils.c \
 		$Sget_next_line.c \
 		$Sget_next_line_utils.c \
-		$Scheck_file_path.c 
+		$Scheck_file_path.c \
+		$Scheck_map.c 
 		
 #		$(addprefix $S, examplefolder/)
 

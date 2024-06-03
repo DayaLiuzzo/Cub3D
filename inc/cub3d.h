@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/05/29 18:03:35 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/05/30 18:32:41 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef struct s_file
 int			main(int ac, char **av);
 
 // PARSING
+int	is_invalid(char *line);
+int	is_correct(char c);
+void	alloc_map(t_file *file, int start, int i);
+void	check_invalid_chars(t_file *file);
+int is_present(char *cardinal, t_file *file);
+int is_element(char *cardinal);
+void	copy_map(t_file *file);
+void	check_map(t_file *file);
 t_file		check_file(int ac, char **av);
 void		print_tab(char **strs);
 void		check_element(t_file *file, char *line);
