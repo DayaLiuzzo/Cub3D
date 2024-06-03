@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 19:26:01 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 21:10:48 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ int	main(int ac, char **av)
 
 	game.map = check_file(ac, av);
 	init_game(&game.map, &game);
-	print_tab(game.map.map);
+	// print_tab(game.map.map);
+	game.mlx_init = mlx_init();
+	game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
+	mlx_loop_hook(game.mlx_init, &loop, &game);
+	mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
+	mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release, &game);
+	mlx_loop(game.mlx_init);
 	parse_error("FINISHED", &game.map);
-	// game.mlx_init = mlx_init();
-	// game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
-	// mlx_loop_hook(game.mlx_init, &loop, &game);
-	// mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
-	// mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release, &game);
-	// mlx_loop(game.mlx_init);
 	return (0);
 }
 
@@ -71,6 +71,7 @@ void init_game(t_file *file, t_game *game)
 	game->player.x = file->start_x * T_SIZE + T_SIZE / 2;
 	game->player.y = file->start_y * T_SIZE + T_SIZE / 2;
 	game->player.angle = get_angle(file->orientation);
+	game->player.fov = (FOV * M_PI) / 180;
 	game->player.r = 0;
 	game->player.l_or_r = 0;
 	game->player.f_or_b = 0;

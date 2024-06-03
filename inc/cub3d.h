@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 19:20:09 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:50:50 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ typedef struct s_utils
 int			main(int ac, char **av);
 
 // PARSING
-int check_map_char(t_file *file, t_utils *util);
-void parse_map(t_file *file);
+int 			check_map_char(t_file *file, t_utils *util);
+void 			parse_map(t_file *file);
 int 			get_height(char **strs);
 double			get_angle(char c);
 int				get_width(char **strs);
