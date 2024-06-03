@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/05/30 18:32:41 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:39:27 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,43 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <math.h>
+
+# define S_W 950
+# define S_H 500
+# define T_SIZE 16
+# define FOV 60
+# define R_SPEED 0.045 
+# define P_SPEED 1
+
+
+typedef struct s_player
+{
+		int 	x; // pos du joueur en pixel
+		int 	y; // pos du joueur en pixel
+		double	angle; // angle du joueur
+		double 	fov; // angle de vision
+		int     r; // rayon de vision
+		int     l_or_r;	// 1 = left, 0 = right
+		int     f_or_b;	// 1 = front, 0 = back
+}	t_player; 
+
+
+typedef struct s_ray
+{
+	double 	angle; //angle du rayon en radian
+	double 	distance; //distance du rayon
+	int     hit; // 1 = mur, 0 = pas de mur
+} t_ray;
+
+typedef struct s_game 
+{
+		void *mlx_init;
+		void *mlx_win;
+		t_file map;
+		t_player player;
+		t_ray ray;
+}	t_game;
 
 typedef struct s_file
 {
@@ -39,6 +76,8 @@ typedef struct s_file
 	char	orientation;
 	int		start_x;
 	int		start_y;
+	int       width;
+	int       height;
 
 }			t_file;
 

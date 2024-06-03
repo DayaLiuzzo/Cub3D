@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 18:28:54 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 16:36:11 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 16:48:01 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,17 @@ void	check_map(t_file *file)
 void parse_map(t_file *file)
 {
 	int i;
+	int j;
 	
-	i = 0;	
+	i = 0;
+	j = 0;
+	while(file->map[i])
+	{
+		while(file->map[i][j])
+		{
+			if(file->map[i][j] == '0')
+		}
+	}
 }
 void	copy_map(t_file *file)
 {
