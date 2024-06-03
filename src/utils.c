@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:53 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/05/29 17:55:45 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:50:09 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	set_null(t_file *file)
 	file->C_color = NULL;
 	file->map = NULL;
 	file->orientation = 'm';
-	file->start_x = 0;
-	file->start_y = 0;
+	file->start_x = 1;
+	file->start_y = 1;
 }
 
 int	ft_checkifint(char *nptr)

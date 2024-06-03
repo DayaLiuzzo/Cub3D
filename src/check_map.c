@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 18:28:54 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 16:48:01 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:45:38 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,20 @@ void	check_map(t_file *file)
 {
 	copy_map(file);
 	check_invalid_chars(file);
-	parse_map(file);
+	// parse_map(file);
 }
-void parse_map(t_file *file)
-{
-	int i;
-	int j;
+// void parse_map(t_file *file)
+// {
+// 	t_utils util;
 	
-	i = 0;
-	j = 0;
-	while(file->map[i])
-	{
-		while(file->map[i][j])
-		{
-			if(file->map[i][j] == '0')
-		}
-	}
-}
+// 	while(file->map[util.i])
+// 	{
+// 		while(file->map[][j])
+// 		{
+// 			if(file->map[i][j] == '0')
+// 		}
+// 	}
+// }
 void	copy_map(t_file *file)
 {
 	int	i;
@@ -89,7 +86,7 @@ void	check_invalid_chars(t_file *file)
 	in = 1;
 	while (file->map[i])
 	{
-		if (is_invalid(file->map[i], file) == 1)
+		if (is_invalid(file->map[i]) == 1)
 			parse_error("Invalid charactersss", file);
 	 	// if (is_is_empty)
 		i++;

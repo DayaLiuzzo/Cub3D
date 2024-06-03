@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 17:40:25 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:48:56 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 	t_game game;
 
 	file = check_file(ac, av);
-	init_game_parsing(&file, &game);
+	init_game(&file, &game);
 	print_tab(file.map);
 	parse_error("FINISHED", &file);
 	return (0);
@@ -93,11 +93,12 @@ int get_width(char **strs)
 double get_angle(char c)
 {
 	if(c == 'N')
-		return(M_PI / 2)
+		return(M_PI / 2);
 	if(c == 'E')
-		return(0)
+		return(0);
 	if(c == 'S')
-		return(3 * M_PI / 2)
+		return(3 * M_PI / 2);
 	if(c == 'W')
-		return(M_PI)
+		return(M_PI);
+	return(0);
 }
