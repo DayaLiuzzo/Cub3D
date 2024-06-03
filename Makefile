@@ -14,18 +14,20 @@ CC = cc
 LDFLAGS = -L$L -lft -L$M -lmlx -lXext -lX11 -lm
 CFLAGS	+=	-I$I -I$L$I -I$M
 
-SRCS =	$Smain.c \
-		$Scheck_file.c \
-		$Serror.c \
-		$Scheck_file_elements.c \
-		$Sutils.c \
-		$Sget_next_line.c \
-		$Sget_next_line_utils.c \
-		$Scheck_file_path.c \
-		$Scheck_map.c \
-		$Splayer_move.c \
-		$Srayon.c \
-		$Srender.c
+SRCS	=	$(addprefix $Sparsing/, \
+				check_file.c \
+				error.c \
+				check_file_elements.c \
+				utils.c \
+				get_next_line.c \
+				get_next_line_utils.c \
+				check_file_path.c \
+				check_map.c) \
+			$(addprefix $Sexecution/, \
+				player_move.c \
+				rayon.c \
+				render.c) \
+			$Smain.c
 		
 #		$(addprefix $S, examplefolder/)
 
