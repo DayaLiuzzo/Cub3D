@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:33:55 by tburtin           #+#    #+#             */
-/*   Updated: 2024/06/03 18:22:09 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 21:31:33 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ float	radiant_angle(float angle)
 
 int	color(t_game *game, int flag)
 {
-	game->ray.angle = radiant_angle(game->ray.angle); 
+	game->ray.angle = radiant_angle(game->ray.angle);
 	if (flag == 0)
 	{
 		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * (M_PI / 2))
@@ -40,22 +40,23 @@ int	color(t_game *game, int flag)
 	}
 }
 
-void	put_pixel(t_game *game, int x, int y, int color)	
+void	put_pixel(t_game *game, int x, int y, int color)
 {
-	if (x < 0) 
+	if (x < 0)
 		return ;
 	else if (x >= S_W)
 		return ;
-	if (y < 0) 
+	if (y < 0)
 		return ;
 	else if (y >= S_H)
 		return ;
-	mlx_pixel_put(game->mlx_init, game->mlx_win, x, y, color); 
+	mlx_pixel_put(game->mlx_init, game->mlx_win, x, y, color);
 }
 
-void	draw_floor_ceiling(t_game *game, int ray, int t_p, int b_p)	// draw the floor and the ceiling
+void	draw_floor_ceiling(t_game *game, int ray, int t_p, int b_p)
+		// draw the floor and the ceiling
 {
-	int		i;
+	int i;
 
 	i = b_p;
 	while (i < S_H)
@@ -65,7 +66,7 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_p, int b_p)	// draw the flo
 		put_pixel(game, ray, i++, 0x00000000); // ciel
 }
 
-void	draw_wall(t_game *game, int ray, int t_p, int b_p)	// draw the wall
+void	draw_wall(t_game *game, int ray, int t_p, int b_p) // draw the wall
 {
 	int c;
 
@@ -76,18 +77,20 @@ void	draw_wall(t_game *game, int ray, int t_p, int b_p)	// draw the wall
 
 void	render_wall(t_game *game, int ray)
 {
-	double	wall_h;
-	double	b_p;
-	double	t_p;
+	double wall_h;
+	double b_p;
+	double t_p;
 
-	game->ray.distance *= cos(radiant_angle(game->ray.angle - game->player.angle)); 
-	wall_h = (T_SIZE / game->ray.distance) * ((S_W / 2) / tan(game->player.fov / 2)); 
-	b_p = (S_H / 2) + (wall_h / 2); 
-	t_p = (S_H / 2) - (wall_h / 2); 
+	game->ray.distance *= cos(radiant_angle(game->ray.angle
+				- game->player.angle));
+	wall_h = (T_SIZE / game->ray.distance) * ((S_W / 2) / tan(game->player.fov
+				/ 2));
+	b_p = (S_H / 2) + (wall_h / 2);
+	t_p = (S_H / 2) - (wall_h / 2);
 	if (b_p > S_H)
 		b_p = S_H;
-	if (t_p < 0) 
+	if (t_p < 0)
 		t_p = 0;
-	draw_wall(game, ray, t_p, b_p); 
+	draw_wall(game, ray, t_p, b_p);
 	draw_floor_ceiling(game, ray, t_p, b_p);
 }

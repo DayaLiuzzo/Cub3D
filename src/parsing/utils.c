@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:53 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 18:22:12 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:20:05 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	print_tab(char **strs)
 		i = 0;
 		while (strs[i])
 		{
-			printf("%s", strs[i]);
+			printf("%s\n", strs[i]);
 			i++;
 		}
-		printf("\n");
 	}
 }
 int	ft_strncmpp(char *s1, char *s2, int n)
@@ -61,9 +60,9 @@ void	set_null(t_file *file)
 
 int	ft_checkifint(char *nptr)
 {
-	int					i;
-	unsigned long long	r;
-	int					m;
+	int i;
+	unsigned long long r;
+	int m;
 
 	i = 0;
 	r = 0;

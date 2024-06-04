@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:56 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 18:21:50 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 21:31:09 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_file	check_file(int ac, char **av)
 	if (check_file_name(av[1], 0, 0) == 1)
 		parse_error("Wrong File Name / Format", &file);
 	file.f_copy = open_file(av[1], 0, 0, 0);
-    check_file_elements(&file);
-    check_map(&file);
-    return(file);
+	check_file_elements(&file);
+	check_map(&file);
+	return (file);
 }
 
 int	check_file_name(char *file_name, int i, int j)
@@ -82,12 +82,11 @@ char	**open_file(char *file_name, int i, int fd, int file_lines)
 	return (file);
 }
 
-
 int	count_lines(char *file_name)
 {
-	int count;
-	char *line;
-	int fd;
+	int		count;
+	char	*line;
+	int		fd;
 
 	count = 0;
 	fd = open(file_name, O_RDONLY);

@@ -6,11 +6,11 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 21:10:48 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:24:35 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 void	ray(t_game *game)
 {
@@ -22,49 +22,49 @@ void	ray(t_game *game)
 	game->ray.angle = game->player.angle - (game->player.fov / 2);
 	while (ray < S_W)
 	{
-		game->ray.hit = 0; 
+		game->ray.hit = 0;
 		h_inter = get_h_inter(game, radiant_angle(game->ray.angle));
-		v_inter = get_v_inter(game, radiant_angle(game->ray.angle)); 
+		v_inter = get_v_inter(game, radiant_angle(game->ray.angle));
 		if (v_inter <= h_inter)
 			game->ray.distance = v_inter;
 		else
 		{
 			game->ray.distance = h_inter;
-			game->ray.hit = 1; 
+			game->ray.hit = 1;
 		}
-		render_wall(game, ray); 
-		ray++; 
+		render_wall(game, ray);
+		ray++;
 		game->ray.angle += (game->player.fov / S_W);
 	}
 }
 
-int loop(t_game	*game)
+int	loop(t_game *game)
 {
 	rotate(game);
 	ray(game);
 	return (0);
 }
 
-
 int	main(int ac, char **av)
 {
-	// t_file file;
-	t_game game;
+	t_game	game;
 
+	// t_file file;
 	game.map = check_file(ac, av);
 	init_game(&game.map, &game);
 	// print_tab(game.map.map);
-	game.mlx_init = mlx_init();
-	game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
-	mlx_loop_hook(game.mlx_init, &loop, &game);
-	mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
-	mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release, &game);
-	mlx_loop(game.mlx_init);
+	// game.mlx_init = mlx_init();
+	// game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
+	// mlx_loop_hook(game.mlx_init, &loop, &game);
+	// mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
+	// mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release,
+	// 	&game);
+	// mlx_loop(game.mlx_init);
 	parse_error("FINISHED", &game.map);
 	return (0);
 }
 
-void init_game(t_file *file, t_game *game)
+void	init_game(t_file *file, t_game *game)
 {
 	file->width = get_width(file->map);
 	file->height = get_height(file->map);
@@ -80,66 +80,65 @@ void init_game(t_file *file, t_game *game)
 	game->ray.hit = 0;
 }
 
-char **tab_copy(char **strs)
+char	**tab_copy(char **strs)
 {
-	char **new_strs;
-	int i;
-	int j;
-	
+	char	**new_strs;
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
-	while(strs[i])
+	while (strs[i])
 		i++;
 	new_strs = ft_calloc((i + 1), sizeof(char *));
-	if(!new_strs)
-		return(NULL);
-	while(j < i)
+	if (!new_strs)
+		return (NULL);
+	while (j < i)
 	{
 		new_strs[j] = ft_strdup(strs[j]);
-		if(!new_strs)
-			return(ft_free_tab(new_strs), NULL);
+		if (!new_strs)
+			return (ft_free_tab(new_strs), NULL);
 		j++;
 	}
-	return(new_strs);
+	return (new_strs);
 }
 
-int get_height(char **strs)
+int	get_height(char **strs)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(strs[i])
+	while (strs[i])
 		i++;
-	return(i);
+	return (i);
 }
-int get_width(char **strs)
+int	get_width(char **strs)
 {
-	int i;
-	int len;
-	int max;
+	int	i;
+	int	len;
+	int	max;
 
 	i = 0;
 	len = 0;
 	max = 0;
-	
-	while(strs[i])
+	while (strs[i])
 	{
 		len = ft_strlen(strs[i]);
-		if(len > max)
+		if (len > max)
 			max = len;
 		i++;
 	}
 	return (max);
 }
-double get_angle(char c)
+double	get_angle(char c)
 {
-	if(c == 'N')
-		return(M_PI / 2);
-	if(c == 'E')
-		return(0);
-	if(c == 'S')
-		return(3 * M_PI / 2);
-	if(c == 'W')
-		return(M_PI);
-	return(0);
+	if (c == 'N')
+		return (M_PI / 2);
+	if (c == 'E')
+		return (0);
+	if (c == 'S')
+		return (3 * M_PI / 2);
+	if (c == 'W')
+		return (M_PI);
+	return (0);
 }

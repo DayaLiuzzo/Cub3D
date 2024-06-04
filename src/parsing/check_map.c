@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 18:28:54 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 19:13:17 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:24:00 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,12 @@ void	check_map(t_file *file)
 {
 	copy_map(file);
 	check_invalid_chars(file);
-	// parse_map(file);
-}
-void parse_map(t_file *file)
-{
-	t_utils util;
-	
-	util.i = 0;
-	util.j = 0;
-	while(file->map[util.i])
-	{
-		while(file->map[util.i][util.j])
-		{
-			if(check_map_char(file, &util) == 0)
-				parse_error("Invalid Char in map", file);
-			util.j++;
-		}
-		util.i++;
-	}
+	check_empty_lines(file);
+	remove_empty_lines(file, 0);
+	parse_map(file);
+	// print_tab(file->map);
 }
 
-int check_map_char(t_file *file, t_utils *util)
-{
-	(void)file;
-	(void)util;
-	return(1);
-}
 void	copy_map(t_file *file)
 {
 	int	i;
@@ -80,7 +60,7 @@ void	alloc_map(t_file *file, int start, int i)
 	file->map = ft_calloc((len + 1), sizeof(char *));
 	if (!file->map)
 		parse_error("memory alloc -> alloc_map", file);
-	while (j != len)
+	while (j < len)
 	{
 		file->map[j] = ft_strdup(file->f_copy[start]);
 		if (!file->map[j])
@@ -92,7 +72,7 @@ void	alloc_map(t_file *file, int start, int i)
 void	check_invalid_chars(t_file *file)
 {
 	int	i;
-	int in;
+	int	in;
 
 	i = 0;
 	in = 1;
@@ -111,11 +91,11 @@ int	is_invalid(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if(is_correct(line[i]) == 0)
-			return(1);
+		if (is_correct(line[i]) == 0)
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	is_correct(char c)
@@ -136,6 +116,6 @@ int	is_correct(char c)
 		return (1);
 	if (c == '\n')
 		return (1);
-	else 
+	else
 		return (0);
 }

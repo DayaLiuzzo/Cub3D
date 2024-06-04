@@ -17,11 +17,13 @@ CFLAGS	+=	-I$I -I$L$I -I$M
 SRCS	=	$(addprefix $Sparsing/, \
 				check_file.c \
 				error.c \
+				check_empty_lines.c \
 				check_file_elements.c \
 				utils.c \
 				get_next_line.c \
 				get_next_line_utils.c \
 				check_file_path.c \
+				parse_map.c \
 				check_map.c) \
 			$(addprefix $Sexecution/, \
 				player_move.c \

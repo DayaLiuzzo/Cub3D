@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:08:25 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 18:21:55 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:20:43 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_free_tab(char **value)
 			free(value[i]);
 			i++;
 		}
-		if(value)
+		if (value)
 			free(value);
 		value = NULL;
 	}

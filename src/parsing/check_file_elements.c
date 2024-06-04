@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:34:52 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 18:21:42 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/03 21:31:00 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,39 @@ void	check_file_elements(t_file *file)
 		parse_error("missing texture", file);
 }
 
-int set_color(char *rgb, t_file *file, char *color)
+int	set_color(char *rgb, t_file *file, char *color)
 {
-	char **hexas;
-	int i;
-	int tmp_hexa;
-	
+	char	**hexas;
+	int		i;
+	int		tmp_hexa;
+
 	i = 0;
 	hexas = ft_split(rgb, ',');
-	while(hexas[i])
+	while (hexas[i])
 	{
 		tmp_hexa = ft_checkifint(hexas[i]);
-		if(tmp_hexa > 255 || tmp_hexa < 0)
+		if (tmp_hexa > 255 || tmp_hexa < 0)
 		{
 			free(rgb);
-			return(ft_free_tab(hexas), 0);
+			return (ft_free_tab(hexas), 0);
 		}
 		i++;
 	}
-	if(i != 3)
+	if (i != 3)
 	{
 		free(rgb);
-		return(ft_free_tab(hexas), 0);
+		return (ft_free_tab(hexas), 0);
 	}
 	else
 		assign_colors(rgb, color, file);
-	return(ft_free_tab(hexas), 1);
-		
+	return (ft_free_tab(hexas), 1);
 }
 
-void assign_colors(char *rgb, char *color, t_file *file)
+void	assign_colors(char *rgb, char *color, t_file *file)
 {
-	if(color[0] == 'C')
+	if (color[0] == 'C')
 		file->C_color = rgb;
-	else if(color[0] == 'F')
+	else if (color[0] == 'F')
 		file->F_color = rgb;
 }
 
@@ -70,7 +69,7 @@ void	check_color(char *line, t_file *file, char *color)
 	char	*rgb;
 	int		i;
 
-	if(is_present(color, file) == 1)
+	if (is_present(color, file) == 1)
 		parse_error("Invalid characters", file);
 	i = 0;
 	new = ft_split(line, ' ');
@@ -130,7 +129,7 @@ int	all_elements_valid(t_file *file)
 	return (1);
 }
 
-int is_element(char *cardinal)
+int	is_element(char *cardinal)
 {
 	if (cardinal[0] == 'N')
 		return (1);
