@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/04 17:21:52 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:59:13 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ typedef struct s_utils
 int				main(int ac, char **av);
 
 // PARSING
+int is_not_wall(char c);
 double			get_angle(char c);
 char			**open_file(char *file_name, int i, int fd, int file_lines);
 void			parse_map(t_file *file);
+void 			get_player_start(t_file *file, char **map);
 void			check_invalid_chars(t_file *file);
 void			check_element(t_file *file, char *line);
 void			check_map(t_file *file);

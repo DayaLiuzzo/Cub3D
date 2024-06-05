@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:53 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/04 16:20:05 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:25:23 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	set_null(t_file *file)
 	file->F_color = NULL;
 	file->C_color = NULL;
 	file->map = NULL;
-	file->orientation = 'm';
+	file->orientation = '0';
 	file->start_x = 1;
 	file->start_y = 1;
 }
