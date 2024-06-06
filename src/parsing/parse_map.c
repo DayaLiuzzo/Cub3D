@@ -1,12 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 17:03:37 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/06 17:04:14 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int is_not_wall(char c)
+int	is_not_wall(char c)
 {
-	if(c == '0' || c == 'N' || c == 'E' || c == 'W' || c == 'S')
-		return(1);
-	return(0);
+	if (c == '0' || c == 'N' || c == 'E' || c == 'W' || c == 'S')
+		return (1);
+	return (0);
 }
-void check_map_is_closed(t_file *file)
+
+void	check_map_is_closed(t_file *file)
 {
 	int	col;
 	int	row;
@@ -17,11 +30,11 @@ void check_map_is_closed(t_file *file)
 	{
 		while (file->map[row][col])
 		{
-			if(is_not_wall(file->map[row][col]) == 1)
+			if (is_not_wall(file->map[row][col]) == 1)
 				if (!(is_closed(file->map, row, col, UP) == 1
-					&& is_closed(file->map, row, col, RIGHT)
-					&& is_closed(file->map, row, col, DOWN)
-					&& is_closed(file->map, row, col, LEFT)))
+						&& is_closed(file->map, row, col, RIGHT)
+						&& is_closed(file->map, row, col, DOWN)
+						&& is_closed(file->map, row, col, LEFT)))
 					parse_error("isnt closed", file);
 			col++;
 		}
@@ -32,9 +45,9 @@ void check_map_is_closed(t_file *file)
 
 int	is_closed(char **map, int row, int col, int path)
 {
-	int tmp_row;
-	int tmp_col;
-	int in_wall;
+	int	tmp_row;
+	int	tmp_col;
+	int	in_wall;
 
 	in_wall = 0;
 	tmp_row = row;
@@ -42,9 +55,9 @@ int	is_closed(char **map, int row, int col, int path)
 	while (col >= 0 && row >= 0 && map[row] && col < ft_strlen(map[row])
 		&& map[row][col])
 	{
-		if(map[row][col] == '1')
+		if (map[row][col] == '1' || map[row][col] == ' ')
 			in_wall = 1;
-		else if(is_not_wall(map[row][col]))
+		else if (is_not_wall(map[row][col]))
 			in_wall = 0;
 		if (path == UP)
 			row--;
@@ -57,21 +70,22 @@ int	is_closed(char **map, int row, int col, int path)
 	}
 	return (in_wall);
 }
-void get_player_start(t_file *file, char **map)
+
+void	get_player_start(t_file *file, char **map)
 {
-	int row;
-	int col;
+	int	row;
+	int	col;
 
 	row = 0;
 	col = 0;
-
-	while(map[row])
+	while (map[row])
 	{
-		while(map[row][col])
+		while (map[row][col])
 		{
-			if(map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'S' || map[row][col] == 'W')
+			if (map[row][col] == 'N' || map[row][col] == 'E'
+				|| map[row][col] == 'S' || map[row][col] == 'W')
 			{
-				if(file->orientation != '0')
+				if (file->orientation != '0')
 					parse_error("Only one starting position", file);
 				file->orientation = map[row][col];
 				file->start_x = col;
@@ -82,11 +96,18 @@ void get_player_start(t_file *file, char **map)
 		row++;
 		col = 0;
 	}
-	if(file->orientation == '0')
-					parse_error("Missing starting position", file);
+	if (file->orientation == '0')
+		parse_error("Missing starting position", file);
 }
+
 void	parse_map(t_file *file)
 {
 	check_map_is_closed(file);
 	get_player_start(file, file->map);
+	file->F_color = rgb_to_hex(file, file->F_color, ',');
+	if (!file->F_color)
+		parse_error("malloc error", file);
+	file->C_color = rgb_to_hex(file, file->C_color, ',');
+	if (!file->C_color)
+		parse_error("malloc error", file);
 }

@@ -20,10 +20,12 @@ SRCS	=	$(addprefix $Sparsing/, \
 				check_empty_lines.c \
 				check_file_elements.c \
 				utils.c \
+				utils_2.c \
 				get_next_line.c \
 				get_next_line_utils.c \
 				check_file_path.c \
 				parse_map.c \
+				convert_hexa.c \
 				check_map.c) \
 			$(addprefix $Sexecution/, \
 				player_move.c \

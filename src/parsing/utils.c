@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:53 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/05 17:25:23 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/06 17:04:33 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	print_tab(char **strs)
 		}
 	}
 }
+
 int	ft_strncmpp(char *s1, char *s2, int n)
 {
 	int	i;
@@ -43,6 +44,7 @@ int	ft_strncmpp(char *s1, char *s2, int n)
 	}
 	return (0);
 }
+
 void	set_null(t_file *file)
 {
 	file->NO_text_path = NULL;
@@ -60,9 +62,9 @@ void	set_null(t_file *file)
 
 int	ft_checkifint(char *nptr)
 {
-	int i;
-	unsigned long long r;
-	int m;
+	unsigned long long	r;
+	int					i;
+	int					m;
 
 	i = 0;
 	r = 0;
@@ -85,4 +87,24 @@ int	ft_checkifint(char *nptr)
 	if (i == 0 || i != (int)ft_strlen(nptr))
 		return (-1);
 	return ((int)r * m);
+}
+
+void	ft_replace_in_tab(char **map, char a, char b)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (map[i])
+	{
+		while (map[i][j])
+		{
+			if (map[i][j] == a)
+				map[i][j] = b;
+			j++;
+		}
+		i++;
+		j = 0;
+	}
 }

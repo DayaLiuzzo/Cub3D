@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/05 17:56:40 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:09 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,35 +51,16 @@ int	main(int ac, char **av)
 
 	// t_file file;
 	game.map = check_file(ac, av);
-	printf("F_color --> %s\n", game.map.F_color);
 	init_game(&game.map, &game);
-	// print_tab(game.map.map);
-	// game.mlx_init = mlx_init();
-	// game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
-	// mlx_loop_hook(game.mlx_init, &loop, &game);
-	// mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
-	// mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release,
-	// 	&game);
-	// mlx_loop(game.mlx_init);
+	game.mlx_init = mlx_init();
+	game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
+	mlx_loop_hook(game.mlx_init, &loop, &game);
+	mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
+	mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release,
+		&game);
+	mlx_loop(game.mlx_init);
 	parse_error("FINISHED", &game.map);
 	return (0);
-}
-void rgb_to_hex(t_file *file, char *rgb, char c)
-{
-	char **new_rgb;
-	int r;
-	int g;
-	int b;
-	
-	new_rgb = ft_split(rgb, c);
-	if(!new_rgb)
-		parse_error("malloc error at rgb_to_hex", file);
-	r = ft_checkifint(new_rgb[0]);
-	g = ft_checkifint(new_rgb[1]);
-	b = ft_checkifint(new_rgb[2]);
-	// ft_itoa((r/16)); 
-	// ft_itoa((r%16));
-	
 }
 void	init_game(t_file *file, t_game *game)
 {

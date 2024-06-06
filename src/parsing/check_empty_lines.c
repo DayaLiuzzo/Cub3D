@@ -1,28 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_empty_lines.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 17:03:17 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/06 17:03:28 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int is_end(t_file *file, int line)
+int	is_end(t_file *file, int line)
 {
-	while(file->map[line])
+	while (file->map[line])
 	{
-		if(!is_empty(file->map[line]))
-			return(0);
+		if (!is_empty(file->map[line]))
+			return (0);
 		line++;
 	}
-	return(1);
+	return (1);
 }
-int is_empty(char *line)
+
+int	is_empty(char *line)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(line[i])
+	while (line[i])
 	{
-		if(line[i] != 10 && line[i] != ' ')
-			return(0);
+		if (line[i] != 10)
+			return (0);
 		i++;
 	}
-	return(1);
+	return (1);
 }
+
 void	check_empty_lines(t_file *file)
 {
 	t_utils	util;
@@ -31,29 +45,30 @@ void	check_empty_lines(t_file *file)
 	util.j = 0;
 	while (file->map[util.i])
 	{
-		if(is_empty(file->map[util.i]) == 1)
-			if(is_end(file, util.i) == 0)
+		if (is_empty(file->map[util.i]) == 1)
+			if (is_end(file, util.i) == 0)
 				parse_error("Empty lines in map", file);
 		util.i++;
 	}
 }
-void remove_empty_lines(t_file *file, int k)
+
+void	remove_empty_lines(t_file *file, int k)
 {
-	int i;
-	int j;
-	char **new_map;
-	
+	int		i;
+	int		j;
+	char	**new_map;
+
 	i = 0;
 	j = 0;
-	while(file->map[i] && is_empty(file->map[i]) == 0 )
+	while (file->map[i] && is_empty(file->map[i]) == 0)
 		i++;
 	new_map = ft_calloc((i + 1), (sizeof(char *)));
-	if(!new_map)
+	if (!new_map)
 		parse_error("Malloc error -> remove_empty_lines", file);
-	while(j < i && is_empty(file->map[k]) == 0)
+	while (j < i && is_empty(file->map[k]) == 0)
 	{
 		new_map[j] = ft_strtrim(file->map[k], "\n");
-		if(!new_map[j])
+		if (!new_map[j])
 		{
 			ft_free_tab(new_map);
 			parse_error("Malloc error -> remove_empty_lines", file);
