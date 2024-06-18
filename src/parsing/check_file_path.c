@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 17:27:52 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/03 21:31:05 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:48 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	is_present(char *cardinal, t_file *file)
 		return (1);
 	if (cardinal[0] == 'E' && file->EA_text_path != NULL)
 		return (1);
-	if (cardinal[0] == 'C' && file->C_color != NULL)
+	if (cardinal[0] == 'C' && file->C_c_color != NULL)
 		return (1);
-	if (cardinal[0] == 'F' && file->F_color != NULL)
+	if (cardinal[0] == 'F' && file->F_c_color != NULL)
 		return (1);
 	return (0);
 }

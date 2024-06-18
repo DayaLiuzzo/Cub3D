@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:08:25 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:01:17 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:57 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	parse_error(char *msg, t_file *file)
 	ft_free_str(file->SO_text_path);
 	ft_free_str(file->WE_text_path);
 	ft_free_str(file->EA_text_path);
-	ft_free_str(file->C_color);
-	ft_free_str(file->F_color);
+	ft_free_str(file->C_c_color);
+	ft_free_str(file->F_c_color);
 	ft_free_tab(file->f_copy);
 	ft_free_tab(file->map);
 	exit(127);

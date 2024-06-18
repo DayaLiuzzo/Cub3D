@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:03:37 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:04:14 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:24:01 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	get_player_start(t_file *file, char **map)
 				|| map[row][col] == 'S' || map[row][col] == 'W')
 			{
 				if (file->orientation != '0')
-					parse_error("Only one starting position", file);
+					parse_error("more than one starting position", file);
 				file->orientation = map[row][col];
 				file->start_x = col;
 				file->start_y = row;
@@ -104,10 +104,6 @@ void	parse_map(t_file *file)
 {
 	check_map_is_closed(file);
 	get_player_start(file, file->map);
-	file->F_color = rgb_to_hex(file, file->F_color, ',');
-	if (!file->F_color)
-		parse_error("malloc error", file);
-	file->C_color = rgb_to_hex(file, file->C_color, ',');
-	if (!file->C_color)
-		parse_error("malloc error", file);
+	file->F_color = char_to_rgb(file, file->F_c_color, ',');
+	file->C_color = char_to_rgb(file, file->C_c_color, ',');
 }

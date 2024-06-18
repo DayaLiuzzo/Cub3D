@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 16:04:53 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:04:33 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:23:00 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	set_null(t_file *file)
 	file->WE_text_path = NULL;
 	file->EA_text_path = NULL;
 	file->f_copy = NULL;
-	file->F_color = NULL;
-	file->C_color = NULL;
+	file->F_c_color = NULL;
+	file->C_c_color = NULL;
 	file->map = NULL;
 	file->orientation = '0';
 	file->start_x = 1;

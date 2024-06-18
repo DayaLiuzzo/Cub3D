@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:06:00 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:06:12 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:22:41 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	all_elements_valid(t_file *file)
 		return (0);
 	if (file->EA_text_path == NULL)
 		return (0);
-	if (file->F_color == NULL)
+	if (file->F_c_color == NULL)
 		return (0);
-	if (file->C_color == NULL)
+	if (file->C_c_color == NULL)
 		return (0);
 	return (1);
 }

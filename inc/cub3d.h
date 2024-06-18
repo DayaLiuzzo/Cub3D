@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:07:24 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:14 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ typedef struct s_file
 	char		*SO_text_path;
 	char		*WE_text_path;
 	char		*EA_text_path;
-	char		*F_color;
-	char		*C_color;
+	char		*F_c_color;
+	char		*C_c_color;
+	int 		C_color;
+	int			F_color;
 	char		orientation;
 	int			start_x;
 	int			start_y;
@@ -100,6 +102,9 @@ typedef struct s_utils
 int				main(int ac, char **av);
 
 // PARSING
+int char_to_rgb(t_file *file, char *rgb, char c);
+int assemble(int *rgb);
+void check_all(t_file *file);
 double			get_angle(char c);
 char			*rgb_to_hex(t_file *file, char *rgb, char c);
 char			*convert_to_hex(int *rgb, char *x, int i);

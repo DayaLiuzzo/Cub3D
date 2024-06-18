@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:33:55 by tburtin           #+#    #+#             */
-/*   Updated: 2024/06/03 21:31:33 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:14:28 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,46 @@ int	color(t_game *game, int flag)
 		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * (M_PI / 2))
 			return (0x00FF0000); // west
 		else
-			return (0x00FF0000); // east
+			return (0x0000FF00); // east
 	}
 	else
 	{
 		if (game->ray.angle > 0 && game->ray.angle < M_PI)
-			return (0x0000FF00); // south
+			return (0x000000FF); // south
 		else
-			return (0x0000FF00); // north
+			return (0x000F0F0F); // north
 	}
 }
+// int texture(t_game *game, int flag)
+// {
+// 	int texNum = game->map.map[game->player.x][game->player.y];
+// 	double wallx;
+// 	wallx = game->player.y + game->ray.distance * game->ray.angle;
+// 	wallx -= floor((wallx));
+
+// 	int texx;
+// 	texx = (wallx * 64);
+// 	texx = 64  - texx;
+// } 
+
+// int	color(t_game *game, int flag)
+// {
+// 	game->ray.angle = radiant_angle(game->ray.angle);
+// 	if (flag == 0)
+// 	{
+// 		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * (M_PI / 2))
+// 			return (0x00FF0000); // west
+// 		else
+// 			return (0x0000FF00); // east
+// 	}
+// 	else
+// 	{
+// 		if (game->ray.angle > 0 && game->ray.angle < M_PI)
+// 			return (0x000000FF); // south
+// 		else
+// 			return (0x000F0F0F); // north
+// 	}
+// }
 
 void	put_pixel(t_game *game, int x, int y, int color)
 {
@@ -60,10 +90,10 @@ void	draw_floor_ceiling(t_game *game, int ray, int t_p, int b_p)
 
 	i = b_p;
 	while (i < S_H)
-		put_pixel(game, ray, i++, 0x00FFFF00); // sol
+		put_pixel(game, ray, i++, game->map.F_color); // sol
 	i = 0;
 	while (i < t_p)
-		put_pixel(game, ray, i++, 0x00000000); // ciel
+		put_pixel(game, ray, i++, game->map.C_color); // ciel
 }
 
 void	draw_wall(t_game *game, int ray, int t_p, int b_p) // draw the wall

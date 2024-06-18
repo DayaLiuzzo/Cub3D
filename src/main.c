@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 17:11:09 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/17 14:39:16 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,18 @@ int	loop(t_game *game)
 	ray(game);
 	return (0);
 }
-
+void check_all(t_file *file)
+{
+	print_tab(file->map);
+	printf("NO_text_path --> %s\n", file->NO_text_path);
+	printf("EA_text_path --> %s\n", file->EA_text_path);
+	printf("WE_text_path --> %s\n", file->WE_text_path);
+	printf("SO_text_path --> %s\n", file->SO_text_path);
+	printf("orientation -> %c\n", file->orientation);
+	printf("start_x --> %i ||| start_y --> %i\n", file->start_x, file->start_y);
+	printf("width --> %i  ||| height --> %i\n", file->width, file->height);
+	printf("F_color --> %i ||| C_color --> %i\n", file->F_color, file->C_color);
+}
 int	main(int ac, char **av)
 {
 	t_game	game;
@@ -52,6 +63,7 @@ int	main(int ac, char **av)
 	// t_file file;
 	game.map = check_file(ac, av);
 	init_game(&game.map, &game);
+	// check_all(&game.map);
 	game.mlx_init = mlx_init();
 	game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
 	mlx_loop_hook(game.mlx_init, &loop, &game);

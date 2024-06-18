@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:34:52 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/06 16:59:28 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:39 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	set_color(char *rgb, t_file *file, char *color)
 void	assign_colors(char *rgb, char *color, t_file *file)
 {
 	if (color[0] == 'C')
-		file->C_color = rgb;
+		file->C_c_color = rgb;
 	else if (color[0] == 'F')
-		file->F_color = rgb;
+		file->F_c_color = rgb;
 }
 
 void	check_color(char *line, t_file *file, char *color)
