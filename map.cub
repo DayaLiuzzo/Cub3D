@@ -1,7 +1,7 @@
 NO ./texture/north
 SO ./texture/south
 WE ./texture/west
-EA ./texture/east
+EA ./texture/east.xpm
 C 22,23,124
 F 126,015,024
 

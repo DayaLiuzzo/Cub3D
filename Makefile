@@ -26,6 +26,7 @@ SRCS	=	$(addprefix $Sparsing/, \
 				check_file_path.c \
 				parse_map.c \
 				convert_hexa.c \
+				init.c \
 				check_map.c) \
 			$(addprefix $Sexecution/, \
 				player_move.c \

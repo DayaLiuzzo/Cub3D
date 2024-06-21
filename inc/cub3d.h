@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/11 15:21:14 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:40:10 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,13 @@ typedef struct s_file
 
 }				t_file;
 
+typedef struct s_xpm
+{
+	void *txt;
+	int height;
+	int width;	
+} t_xpm;
+
 typedef struct s_game
 {
 	void		*mlx_init;
@@ -91,6 +98,10 @@ typedef struct s_game
 	t_file		map;
 	t_player	player;
 	t_ray		ray;
+	t_xpm north;
+	t_xpm west;
+	t_xpm south;
+	t_xpm east;
 }				t_game;
 
 typedef struct s_utils
@@ -137,6 +148,7 @@ int				check_path(char *path, t_file *file, char *cardinal);
 t_file			check_file(int ac, char **av);
 
 // UTILS
+void init_textures(t_game *game);
 int				ft_checkifint(char *nptr);
 int				ft_strncmpp(char *s1, char *s2, int n);
 int				count_lines(char *file_name);
@@ -150,6 +162,8 @@ void			ft_replace_in_tab(char **map, char a, char b);
 void			print_tab(char **strs);
 
 // FREE & ERROR
+void			game_error(char *msg, t_game *game);
+void 			ft_free_ptr(void *ptr);
 void			ft_free_tab(char **value);
 void			ft_free_str(char *s);
 void			parse_error(char *msg, t_file *file);

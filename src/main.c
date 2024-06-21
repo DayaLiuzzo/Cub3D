@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/17 14:39:16 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:31:38 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,9 @@ int	main(int ac, char **av)
 {
 	t_game	game;
 
-	// t_file file;
 	game.map = check_file(ac, av);
 	init_game(&game.map, &game);
-	// check_all(&game.map);
-	game.mlx_init = mlx_init();
-	game.mlx_win = mlx_new_window(game.mlx_init, S_W, S_H, "Cub3D");
+	printf("height-> %i | width-> %i\n", game.north.height, game.north.width);
 	mlx_loop_hook(game.mlx_init, &loop, &game);
 	mlx_hook(game.mlx_win, KeyPress, KeyPressMask, &key_hook_press, &game);
 	mlx_hook(game.mlx_win, KeyRelease, KeyReleaseMask, &key_hook_release,
@@ -88,6 +85,9 @@ void	init_game(t_file *file, t_game *game)
 	game->ray.angle = 0;
 	game->ray.distance = 0;
 	game->ray.hit = 0;
+	game->mlx_init = mlx_init();
+	game->mlx_win = mlx_new_window(game->mlx_init, S_W, S_H, "Cub3D");
+	init_textures(game);
 }
 
 char	**tab_copy(char **strs)

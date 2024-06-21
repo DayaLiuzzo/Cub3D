@@ -6,12 +6,32 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:08:25 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/11 15:21:57 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:32:51 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	game_error(char *msg, t_game *game)
+{
+	ft_free_ptr(game->north.txt);
+	ft_free_ptr(game->west.txt);
+	ft_free_ptr(game->south.txt);
+	ft_free_ptr(game->east.txt);
+	ft_free_ptr(game->mlx_init);
+	ft_free_ptr(game->mlx_win);
+	parse_error(msg, &game->map);
+	
+}
+
+void ft_free_ptr(void *ptr)
+{
+	if(ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+}
 void	parse_error(char *msg, t_file *file)
 {
 	if (msg)
