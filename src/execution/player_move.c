@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:42 by tburtin           #+#    #+#             */
-/*   Updated: 2024/06/03 21:31:42 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:20:48 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@ void	move_player(t_game *game, double move_x, double move_y)
 	int new_x;
 	int new_y;
 
-	new_x = roundf(game->player.x + move_x);
-	new_y = roundf(game->player.y + move_y);
+	new_x = roundf(game->player.mapX + move_x);
+	new_y = roundf(game->player.mapY + move_y);
 	map_grid_x = (new_x / T_SIZE);
 	map_grid_y = (new_y / T_SIZE);
 	if (game->map.map[map_grid_y][map_grid_x] != '1'
-		&& (game->map.map[map_grid_y][game->player.x / T_SIZE] != '1'
-			&& game->map.map[game->player.y / T_SIZE][map_grid_x] != '1'))
+		&& (game->map.map[map_grid_y][game->player.mapX / T_SIZE] != '1'
+			&& game->map.map[game->player.mapY / T_SIZE][map_grid_x] != '1'))
 	{
-		game->player.x = new_x;
-		game->player.y = new_y;
+		game->player.mapX = new_x;
+		game->player.mapY = new_y;
 	}
 }
 

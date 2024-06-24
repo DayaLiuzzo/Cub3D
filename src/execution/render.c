@@ -1,126 +1,51 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/03 14:33:55 by tburtin           #+#    #+#             */
-/*   Updated: 2024/06/18 17:14:28 by dliuzzo          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
-float	radiant_angle(float angle)
+void render(t_game *game, t_xpm **tex, int x)
 {
-	if (angle < 0)
-		angle += (2 * M_PI);
-	if (angle > (2 * M_PI))
-		angle -= (2 * M_PI);
-	return (angle);
+	get_wallx(game);
+	get_x_tex(game, *tex);
+    get_y_tex(game, *tex, x);
+    draw_buffer(game);
+
 }
 
-int	color(t_game *game, int flag)
+void draw_buffer(t_game *game)
 {
-	game->ray.angle = radiant_angle(game->ray.angle);
-	if (flag == 0)
-	{
-		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * (M_PI / 2))
-			return (0x00FF0000); // west
-		else
-			return (0x0000FF00); // east
-	}
-	else
-	{
-		if (game->ray.angle > 0 && game->ray.angle < M_PI)
-			return (0x000000FF); // south
-		else
-			return (0x000F0F0F); // north
-	}
-}
-// int texture(t_game *game, int flag)
-// {
-// 	int texNum = game->map.map[game->player.x][game->player.y];
-// 	double wallx;
-// 	wallx = game->player.y + game->ray.distance * game->ray.angle;
-// 	wallx -= floor((wallx));
 
-// 	int texx;
-// 	texx = (wallx * 64);
-// 	texx = 64  - texx;
-// } 
-
-// int	color(t_game *game, int flag)
-// {
-// 	game->ray.angle = radiant_angle(game->ray.angle);
-// 	if (flag == 0)
-// 	{
-// 		if (game->ray.angle > M_PI / 2 && game->ray.angle < 3 * (M_PI / 2))
-// 			return (0x00FF0000); // west
-// 		else
-// 			return (0x0000FF00); // east
-// 	}
-// 	else
-// 	{
-// 		if (game->ray.angle > 0 && game->ray.angle < M_PI)
-// 			return (0x000000FF); // south
-// 		else
-// 			return (0x000F0F0F); // north
-// 	}
-// }
-
-void	put_pixel(t_game *game, int x, int y, int color)
-{
-	if (x < 0)
-		return ;
-	else if (x >= S_W)
-		return ;
-	if (y < 0)
-		return ;
-	else if (y >= S_H)
-		return ;
-	mlx_pixel_put(game->mlx_init, game->mlx_win, x, y, color);
 }
 
-void	draw_floor_ceiling(t_game *game, int ray, int t_p, int b_p)
-		// draw the floor and the ceiling
+void get_y_tex(t_game *game, t_xpm *tex, int x)
 {
-	int i;
+    int y;
+    
 
-	i = b_p;
-	while (i < S_H)
-		put_pixel(game, ray, i++, game->map.F_color); // sol
-	i = 0;
-	while (i < t_p)
-		put_pixel(game, ray, i++, game->map.C_color); // ciel
+    y = game->camera.drawStart;
+    game->camera.step = 1.0 * tex->height / game->camera.lineheight;
+    game->camera.texPos = (game->camera.drawStart - S_H / 2 + game->camera.lineheight / 2) * game->camera.step;
+    while(y < game->camera.drawEnd)
+    {
+        game->camera.texY = (int)game->camera.texPos;
+        game->camera.texPos += game->camera.step;
+        game->camera.color = tex->data[tex->height * game->camera.texY + game->camera.texX];
+        game->camera.buffer[y][x] = game->camera.color;
+        y++;
+    }
 }
 
-void	draw_wall(t_game *game, int ray, int t_p, int b_p) // draw the wall
+void get_x_tex(t_game *game, t_xpm *tex)
 {
-	int c;
-
-	c = color(game, game->ray.hit);
-	while (t_p < b_p)
-		put_pixel(game, ray, t_p++, c);
+	game->camera.texX = (int)(game->camera.wallx * (double)tex->width);
+	if(game->ray.side == 0 && game->ray.DirX > 0)
+		game->camera.texX = tex->width - game->camera.texX - 1;
+	if(game->ray.side == 1 && game->ray.DirY < 0)
+		game->camera.texX = tex->width - game->camera.texX - 1;
 }
 
-void	render_wall(t_game *game, int ray)
+void get_wallx(t_game *game)
 {
-	double wall_h;
-	double b_p;
-	double t_p;
-
-	game->ray.distance *= cos(radiant_angle(game->ray.angle
-				- game->player.angle));
-	wall_h = (T_SIZE / game->ray.distance) * ((S_W / 2) / tan(game->player.fov
-				/ 2));
-	b_p = (S_H / 2) + (wall_h / 2);
-	t_p = (S_H / 2) - (wall_h / 2);
-	if (b_p > S_H)
-		b_p = S_H;
-	if (t_p < 0)
-		t_p = 0;
-	draw_wall(game, ray, t_p, b_p);
-	draw_floor_ceiling(game, ray, t_p, b_p);
+	if(game->ray.side == 0)
+		game->camera.wallx = game->player.posY + game->ray.perpWallDist * game->ray.DirY;
+	else	
+		game->camera.wallx = game->player.posX + game->ray.perpWallDist * game->ray.DirX;
+	game->camera.wallx -= floor((game->camera.wallx));
 }

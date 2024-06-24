@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/21 14:40:10 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:17:58 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define R 0
 # define G 1
 # define B 2
-# define S_W 950
-# define S_H 500
+# define S_W 1780
+# define S_H 960
 # define T_SIZE 16
 # define FOV 60
 # define R_SPEED 0.045
@@ -46,22 +46,53 @@
 # define SPACE 32
 # define ONE 49
 
+
 typedef struct s_player
 {
-	int x;        // pos du joueur en pixel
-	int y;        // pos du joueur en pixel
+	double posX;        // pos du joueur en pixel
+	double posY;        // pos du joueur en pixel
+	double dirX;
+	double dirY;
+	double planeX;
+	double planeY;
 	double angle; // angle du joueur
 	double fov;   // angle de vision
+	int mapX; //pos du joueur en map[x][y]
+	int mapY;
+	int stepX; //next position after movement
+	int stepY; // either +1 / -1
 	int r;        // rayon de vision
 	int l_or_r;   // 1 = left, 0 = right
 	int f_or_b;   // 1 = front, 0 = back
 }				t_player;
+
+typedef struct s_camera
+{
+	char **buffer;
+	double X;
+	int drawStart;
+	int drawEnd;
+	int lineheight;
+	int texNum;
+	double wallx;
+	double step;
+	double texPos;
+	int texX; // where exactly the wall was hit (not map[x][y] but inside map[x][y] pixels)
+	int texY;
+	int color;
+}	t_camera;
 
 typedef struct s_ray
 {
 	double angle;    // angle du rayon en radian
 	double distance; // distance du rayon
 	int hit;         // 1 = mur, 0 = pas de mur
+	int side; //NS hit or EW hit
+	double DirX;
+	double DirY;
+	double sideDistX; //length of ray from current
+	double sideDistY; //position to next x or y side
+	double perpWallDist;
 }				t_ray;
 
 typedef struct s_file
@@ -87,9 +118,19 @@ typedef struct s_file
 typedef struct s_xpm
 {
 	void *txt;
+	int *data;
 	int height;
 	int width;	
 } t_xpm;
+
+typedef struct s_delta
+{
+	double time;
+	double oldTime;	
+	double DistX; //length of ray from one x
+	double DistY; // or y side to next x or y side
+}	t_delta;
+
 
 typedef struct s_game
 {
@@ -98,6 +139,8 @@ typedef struct s_game
 	t_file		map;
 	t_player	player;
 	t_ray		ray;
+	t_delta		delta;
+	t_camera	camera;
 	t_xpm north;
 	t_xpm west;
 	t_xpm south;
@@ -178,13 +221,33 @@ char			*save_line(char *storage);
 char			*line_reader(int fd, char *storage);
 char			*get_next_line(int fd);
 
-// EXEC
+// // EXEC
 int				key_hook_release(int key, t_game *game);
 int				key_hook_press(int key, t_game *game);
-float			get_v_inter(t_game *game, float angl);
-float			get_h_inter(t_game *game, float angle);
-float			radiant_angle(float angle);
-void			rotate(t_game *game);
-void			render_wall(t_game *game, int ray);
+// float			get_v_inter(t_game *game, float angl);
+// float			get_h_inter(t_game *game, float angle);
+// float			radiant_angle(float angle);
+// void			rotate(t_game *game);
+// void			render_wall(t_game *game, int ray);
+
+
+//EXEC DAYA
+char **screen_buffer(t_game *game);
+void set_direction(char direction, double *dirX, double *dirY);
+void perform_dda(t_game *game);
+void raycasting(t_game *game);
+void set_stripe_len(t_game *game);
+int loop(t_game *game);
+void get_wallx(t_game *game);
+void get_x_tex(t_game *game, t_xpm *tex);
+void get_y_tex(t_game *game, t_xpm *tex, int x);
+void render(t_game *game, t_xpm **tex, int x);
+void set_direction(char direction, double *dirX, double *dirY);
+void set_camera_plane(t_game *game);
+char **screen_buffer(t_game *game);
+void set_perp_wall_dist(t_game *game);
+void set_ray_datas(t_game *game, int x);
+void set_side_dist(t_game *game);
+void draw_buffer(t_game *game);
 
 #endif

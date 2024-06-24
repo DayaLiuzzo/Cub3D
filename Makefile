@@ -29,9 +29,11 @@ SRCS	=	$(addprefix $Sparsing/, \
 				init.c \
 				check_map.c) \
 			$(addprefix $Sexecution/, \
-				player_move.c \
-				rayon.c \
-				render.c) \
+				dda.c \
+				raycasting.c \
+				render.c \
+				set_values.c \
+				player_move.c) \
 			$Smain.c
 		
 #		$(addprefix $S, examplefolder/)
