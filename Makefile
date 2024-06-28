@@ -33,7 +33,10 @@ SRCS	=	$(addprefix $Sparsing/, \
 				raycasting.c \
 				render.c \
 				set_values.c \
-				player_move.c) \
+				utils.c \
+				update_player_position.c \
+				rotate_player.c \
+				handle_user_input.c) \
 			$Smain.c
 		
 #		$(addprefix $S, examplefolder/)

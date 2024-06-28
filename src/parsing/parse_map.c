@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:03:37 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/11 15:24:01 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/26 14:16:52 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,10 @@ void	get_player_start(t_file *file, char **map)
 				if (file->orientation != '0')
 					parse_error("more than one starting position", file);
 				file->orientation = map[row][col];
+				map[row][col] = '0';
 				file->start_x = col;
 				file->start_y = row;
+				
 			}
 			col++;
 		}

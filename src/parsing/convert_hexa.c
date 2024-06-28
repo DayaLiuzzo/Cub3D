@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:04:45 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/17 14:37:39 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/27 20:21:32 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int char_to_rgb(t_file *file, char *rgb, char c)
 	rgb_int[G] = ft_checkifint(new_rgb[G]);
 	rgb_int[B] = ft_checkifint(new_rgb[B]);
 	r_value = assemble(rgb_int);
-	ft_free_str(rgb);
 	ft_free_tab(new_rgb);
 	return (r_value);
 }

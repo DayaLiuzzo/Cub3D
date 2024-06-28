@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:08:25 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/21 14:32:51 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/27 20:25:06 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,31 @@
 
 void	game_error(char *msg, t_game *game)
 {
-	ft_free_ptr(game->north.txt);
-	ft_free_ptr(game->west.txt);
-	ft_free_ptr(game->south.txt);
-	ft_free_ptr(game->east.txt);
+	ft_free_intab(game->param.textures, 5);
 	ft_free_ptr(game->mlx_init);
-	ft_free_ptr(game->mlx_win);
 	parse_error(msg, &game->map);
-	
 }
-
-void ft_free_ptr(void *ptr)
+void ft_free_intab(int **tab, int height)
 {
+	int i;
+
+	i = 0;
+	if(tab)
+	{
+		while(tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+		tab = NULL;
+	}
+}
+void ft_free_ptr(void *ptr)
+{	
 	if(ptr)
 	{
+
 		free(ptr);
 		ptr = NULL;
 	}
