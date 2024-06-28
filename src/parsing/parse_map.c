@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:03:37 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/26 14:16:52 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:05:38 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,11 @@ int	is_closed(char **map, int row, int col, int path)
 	return (in_wall);
 }
 
-void	get_player_start(t_file *file, char **map)
+void	get_player_start(t_file *file, char **map, int col)
 {
 	int	row;
-	int	col;
 
 	row = 0;
-	col = 0;
 	while (map[row])
 	{
 		while (map[row][col])
@@ -91,7 +89,6 @@ void	get_player_start(t_file *file, char **map)
 				map[row][col] = '0';
 				file->start_x = col;
 				file->start_y = row;
-				
 			}
 			col++;
 		}
@@ -105,7 +102,7 @@ void	get_player_start(t_file *file, char **map)
 void	parse_map(t_file *file)
 {
 	check_map_is_closed(file);
-	get_player_start(file, file->map);
+	get_player_start(file, file->map, 0);
 	file->F_color = char_to_rgb(file, file->F_c_color, ',');
 	file->C_color = char_to_rgb(file, file->C_c_color, ',');
 }

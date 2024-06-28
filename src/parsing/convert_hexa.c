@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 17:04:45 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/27 20:21:32 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:03:38 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	ft_digit_count_hexa(unsigned long long n, int base)
 	return (digit);
 }
 
-int char_to_rgb(t_file *file, char *rgb, char c)
+int	char_to_rgb(t_file *file, char *rgb, char c)
 {
 	char	**new_rgb;
 	int		rgb_int[3];
-	int		r_value = 0;;
+	int		r_value;
 
+	r_value = 0;
 	new_rgb = ft_split(rgb, c);
 	if (!new_rgb)
 		parse_error("malloc error at rgb_to_hex", file);
@@ -44,14 +45,12 @@ int char_to_rgb(t_file *file, char *rgb, char c)
 	return (r_value);
 }
 
-
-int assemble(int *rgb)
+int	assemble(int *rgb)
 {
-	int r_value;
-	
+	int	r_value;
+
 	r_value = (rgb[R] << 16 | rgb[G] << 8 | rgb[B]);
-	return(r_value);
-	
+	return (r_value);
 }
 
 // char	*rgb_to_hex(t_file *file, char *rgb, char c)

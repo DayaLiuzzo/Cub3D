@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:08:25 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/27 20:25:06 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:10:29 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ void	game_error(char *msg, t_game *game)
 	ft_free_ptr(game->mlx_init);
 	parse_error(msg, &game->map);
 }
-void ft_free_intab(int **tab, int height)
+
+void	ft_free_intab(int **tab, int height)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	if(tab)
+	if (tab)
 	{
-		while(tab[i])
+		while (tab[i])
 		{
 			free(tab[i]);
 			i++;
@@ -34,15 +35,16 @@ void ft_free_intab(int **tab, int height)
 		tab = NULL;
 	}
 }
-void ft_free_ptr(void *ptr)
-{	
-	if(ptr)
-	{
 
+void	ft_free_ptr(void *ptr)
+{
+	if (ptr)
+	{
 		free(ptr);
 		ptr = NULL;
 	}
 }
+
 void	parse_error(char *msg, t_file *file)
 {
 	if (msg)
@@ -58,37 +60,4 @@ void	parse_error(char *msg, t_file *file)
 	ft_free_tab(file->f_copy);
 	ft_free_tab(file->map);
 	exit(127);
-}
-
-void	ft_free_str(char *s)
-{
-	if (s)
-	{
-		free(s);
-		s = NULL;
-	}
-}
-
-void	ft_free_tab(char **value)
-{
-	int	i;
-
-	if (value)
-	{
-		i = 0;
-		while (value[i])
-		{
-			free(value[i]);
-			i++;
-		}
-		if (value)
-			free(value);
-		value = NULL;
-	}
-}
-
-void	join_error(char **tab)
-{
-	ft_free_tab(tab);
-	exit(write(1, "Error : malloc at ft_strjoin2\n", 31));
 }

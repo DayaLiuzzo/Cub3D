@@ -1,90 +1,103 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_values.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:14:11 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/28 15:29:34 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void	set_direction(char direction, double *dirX, double *dirY, t_game *game)
+void	set_direction2(char direction, double *dirx, double *diry, t_game *game)
 {
-	if (direction == 'N')
+	if (direction == 'S')
 	{
-		*dirX = 0.0;
-		*dirY = -1.0;
-		game->camera.planeX = 0.66;
-		game->camera.planeY = 0;
-	}
-	else if (direction == 'E')
-	{
-		*dirX = 1.0;
-		*dirY = 0.0;
-		game->camera.planeX = 0.0;
-		game->camera.planeY = 0.66;
-	}
-	else if (direction == 'S')
-	{
-		*dirX = 0.0;
-		*dirY = 1.0;
-		game->camera.planeX = -0.66;
-		game->camera.planeY = 0;
+		*dirx = 0.0;
+		*diry = 1.0;
+		game->camera.planex = -0.66;
+		game->camera.planey = 0;
 	}
 	else if (direction == 'W')
 	{
-		*dirX = -1.0;
-		*dirY = 0.0;
-		game->camera.planeX = 0.0;
-		game->camera.planeY = -0.66;
+		*dirx = -1.0;
+		*diry = 0.0;
+		game->camera.planex = 0.0;
+		game->camera.planey = -0.66;
 	}
 	else
 	{
-		printf("Invalid direction. Using default direction West.\n");
-		*dirX = -1.0;
-		*dirY = 0.0;
+		*dirx = -1.0;
+		*diry = 0.0;
 	}
 }
-void	set_camera_plane(t_game *game)
+
+void	set_direction(char direction, double *dirx, double *diry, t_game *game)
 {
-	game->camera.planeX = 0.0;
-	game->camera.planeY = 0.66;
+	if (direction == 'N')
+	{
+		*dirx = 0.0;
+		*diry = -1.0;
+		game->camera.planex = 0.66;
+		game->camera.planey = 0;
+	}
+	else if (direction == 'E')
+	{
+		*dirx = 1.0;
+		*diry = 0.0;
+		game->camera.planex = 0.0;
+		game->camera.planey = 0.66;
+	}
+	else
+		set_direction2(direction, dirx, diry, game);
 }
 
 void	set_perp_wall_dist(t_game *game)
 {
 	if (game->ray.side == 0)
-		game->ray.perpWallDist = (game->ray.sideDistX - game->delta.DistX);
+		game->ray.perpwalldist = (game->ray.sidedistx - game->delta.distx);
 	else
-		game->ray.perpWallDist = (game->ray.sideDistY - game->delta.DistY);
+		game->ray.perpwalldist = (game->ray.sidedisty - game->delta.disty);
 }
+
 void	set_ray_datas(t_game *game, int x)
 {
-	game->camera.X = 2 * x / (double)S_W - 1;
-	game->ray.DirX = game->player.dirX + game->camera.planeX * game->camera.X;
-	game->ray.DirY = game->player.dirY + game->camera.planeY * game->camera.X;
-	game->player.mapX = (int)game->player.posX;
-	game->player.mapY = (int)game->player.posY;
-	game->delta.DistX = fabs(1.0 / game->ray.DirX);
-	game->delta.DistY = fabs(1.0 / game->ray.DirY);
+	game->camera.x = 2 * x / (double)S_W - 1;
+	game->ray.dirx = game->player.dirx + game->camera.planex * game->camera.x;
+	game->ray.diry = game->player.diry + game->camera.planey * game->camera.x;
+	game->player.mapx = (int)game->player.posx;
+	game->player.mapy = (int)game->player.posy;
+	game->delta.distx = fabs(1.0 / game->ray.dirx);
+	game->delta.disty = fabs(1.0 / game->ray.diry);
 }
 
 void	set_side_dist(t_game *game)
 {
-	if (game->ray.DirX < 0)
+	if (game->ray.dirx < 0)
 	{
-		game->player.stepX = -1;
-		game->ray.sideDistX = (game->player.posX - game->player.mapX)
-			* game->delta.DistX;
+		game->player.stepx = -1;
+		game->ray.sidedistx = (game->player.posx - game->player.mapx)
+			* game->delta.distx;
 	}
 	else
 	{
-		game->player.stepX = 1;
-		game->ray.sideDistX = (game->player.mapX + 1.0 - game->player.posX)
-			* game->delta.DistX;
+		game->player.stepx = 1;
+		game->ray.sidedistx = (game->player.mapx + 1.0 - game->player.posx)
+			* game->delta.distx;
 	}
-	if (game->ray.DirY < 0)
+	if (game->ray.diry < 0)
 	{
-		game->player.stepY = -1;
-		game->ray.sideDistY = (game->player.posY - game->player.mapY)
-			* game->delta.DistY;
+		game->player.stepy = -1;
+		game->ray.sidedisty = (game->player.posy - game->player.mapy)
+			* game->delta.disty;
 	}
 	else
 	{
-		game->player.stepY = 1;
-		game->ray.sideDistY = (game->player.mapY + 1.0 - game->player.posY)
-			* game->delta.DistY;
+		game->player.stepy = 1;
+		game->ray.sidedisty = (game->player.mapy + 1.0 - game->player.posy)
+			* game->delta.disty;
 	}
 }

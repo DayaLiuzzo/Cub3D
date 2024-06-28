@@ -1,4 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_user_input.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:12:48 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/28 14:13:29 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
+
+void	handle_user_input(t_game *game)
+{
+	mlx_hook(game->mlx_win, ClientMessage, NoEventMask, &close_window, game);
+	mlx_hook(game->mlx_win, KeyPress, KeyPressMask, key_press, game);
+	mlx_hook(game->mlx_win, KeyRelease, KeyReleaseMask, key_release, game);
+}
 
 int	close_window(t_game *game)
 {
@@ -27,12 +46,12 @@ int	key_press(int key, t_game *game)
 	if (key == KEY_ESC)
 		close_window(game);
 	else if (key == KEY_LEFT)
-		game->player.rotate -= 1; // rotate left
+		game->player.rotate -= 1;
 	else if (key == KEY_RIGHT)
-		game->player.rotate += 1; // rotate right
+		game->player.rotate += 1;
 	else if (key == KEY_W)
 		game->player.move_y = 1;
-	else if (key == KEY_A) // move left
+	else if (key == KEY_A)
 		game->player.move_x = -1;
 	else if (key == KEY_S)
 		game->player.move_y = -1;

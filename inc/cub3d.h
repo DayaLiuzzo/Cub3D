@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:09 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/27 19:24:57 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:28:55 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@
 # define KEY_ESC 65307
 # define S_W 1920
 # define S_H 1080
-# define T_SIZE 16
-# define FOV 60
-# define R_SPEED 0.045
-# define P_SPEED 1
 # define UP 1
 # define RIGHT 2
 # define DOWN 3
@@ -60,51 +56,41 @@ typedef struct s_player
 	int			move_x;
 	int			move_y;
 	int			rotate;
-	double posX;  // pos du joueur en pixel
-	double posY;  // pos du joueur en pixel
-	double dirX;  // initial direction vector
-	double dirY;  // initial direction vector
-	double angle; // angle du joueur
-	double fov;   // angle de vision
-	int mapX;     // pos du joueur en map[x][y]
-	int			mapY;
-	int stepX;  // next position after movement
-	int stepY;  // either +1 / -1
-	int r;      // rayon de vision
-	int l_or_r; // 1 = left, 0 = right
-	int f_or_b; // 1 = front, 0 = back
+	double posx;  // pos du joueur en pixel
+	double posy;  // pos du joueur en pixel
+	double dirx;  // initial direction vector
+	double diry;  // initial direction vector
+	int mapx;     // pos du joueur en map[x][y]
+	int	mapy;
+	int stepx;  // next position after movement
+	int stepy;  // either +1 / -1
 }				t_player;
 
 typedef struct s_camera
 {
-	double		planeX;
-	double		planeY;
+	double		planex;
+	double		planey;
 	int			**buffer;
-	double		X;
-	int			drawStart;
-	int			drawEnd;
+	double		x;
+	int			drawstart;
+	int			drawend;
 	int			lineheight;
-	int			texNum;
+	// int			texnum;
 	double		wallx;
 	double		step;
-	double		texPos;
-	int			texX;
-	// where exactly the wall was hit (not map[x][y] but inside map[x][y] pixels)
-	int			texY;
+	double		texpos;// where exactly the wall was hit (not map[x][y] but inside map[x][y] pixels)
 	int			color;
 }				t_camera;
 
 typedef struct s_ray
 {
-	double angle;     // angle du rayon en radian
-	double distance;  // distance du rayon
 	int hit;          // 1 = mur, 0 = pas de mur
 	int side;         // NS hit or EW hit
-	double DirX;      // ray direction
-	double DirY;      // ray direction
-	double sideDistX; // length of ray from current
-	double sideDistY; // position to next x or y side
-	double		perpWallDist;
+	double dirx;      // ray direction
+	double diry;      // ray direction
+	double sidedistx; // length of ray from current
+	double sidedisty; // position to next x or y side
+	double		perpwalldist;
 }				t_ray;
 
 typedef struct s_file
@@ -122,28 +108,13 @@ typedef struct s_file
 	char		orientation;
 	int			start_x;
 	int			start_y;
-	int			width;
-	int			height;
-
 }				t_file;
 
-typedef struct s_xpm
-{
-	void		*txt;
-	int			*data;
-	int			height;
-	int			width;
-	int			endian;
-	int			size_line;
-	int			bpp;
-}				t_xpm;
 
 typedef struct s_delta
 {
-	double		time;
-	double		oldTime;
-	double DistX; // length of ray from one x
-	double DistY; // or y side to next x or y side
+	double distx; // length of ray from one x
+	double disty; // or y side to next x or y side
 }				t_delta;
 
 typedef struct s_textures
@@ -165,10 +136,6 @@ typedef struct s_game
 	t_ray		ray;
 	t_delta		delta;
 	t_camera	camera;
-	t_xpm		north;
-	t_xpm		west;
-	t_xpm		south;
-	t_xpm		east;
 	t_textures	param;
 }				t_game;
 
@@ -200,7 +167,7 @@ char			**open_file(char *file_name, int i, int fd, int file_lines);
 void			check_color(char *line, t_file *file, char *color);
 void			dec_to_hexa(unsigned long long n, char *color, int i);
 void			parse_map(t_file *file);
-void			get_player_start(t_file *file, char **map);
+void			get_player_start(t_file *file, char **map, int col);
 void			check_invalid_chars(t_file *file);
 void			check_element(t_file *file, char *line);
 void			check_map(t_file *file);
@@ -272,9 +239,10 @@ int				update_player_position(t_game *game);
 int				close_window(t_game *game);
 int				key_release(int key, t_game *game);
 int				key_press(int key, t_game *game);
-int	rotate_player(t_game *game, int rotate);
+int				rotate_player(t_game *game, int rotate);
 
 // EXEC
+void			handle_user_input(t_game *game);
 void			set_direction(char direction, double *dirX, double *dirY,
 					t_game *game);
 void			perform_dda(t_game *game);

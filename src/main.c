@@ -6,7 +6,7 @@
 /*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:51:03 by dliuzzo           #+#    #+#             */
-/*   Updated: 2024/06/28 13:50:13 by dliuzzo          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:02:43 by dliuzzo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ int	get_height(char **strs)
 		i++;
 	return (i);
 }
+
 int	get_width(char **strs)
 {
-	int i;
-	int len;
-	int max;
+	int	i;
+	int	len;
+	int	max;
 
 	i = 0;
 	len = 0;

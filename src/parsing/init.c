@@ -1,24 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:07:53 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/28 15:32:04 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-// void init_each(t_game *game, t_xpm *xpm, char *path)
-// {
-//     xpm->txt = mlx_xpm_file_to_image(game->mlx_init,path, &xpm->width, &xpm->height);
-//     if(!xpm->txt)
-//         game_error("texture error", game);
-//     xpm->data = (int*)mlx_get_data_addr(xpm->txt, &xpm->bpp, &xpm->size_line, &xpm->endian);
-//     if(!xpm->data)
-//         game_error("texture error", game);
-// }
-
-void init_textures(t_game *game)
+void	init_textures(t_game *game)
 {
 	game->param.textures = (int **)ft_calloc(5, sizeof(int *));
-	if(!game->param.textures)
+	if (!game->param.textures)
 		close_window(game);
-	game->param.textures[0] = convert (game, game->map.NO_text_path);
-	game->param.textures[1] = convert (game, game->map.SO_text_path);
-	game->param.textures[2] = convert (game, game->map.EA_text_path);
-	game->param.textures[3] = convert (game, game->map.WE_text_path);
+	game->param.textures[0] = convert(game, game->map.NO_text_path);
+	game->param.textures[1] = convert(game, game->map.SO_text_path);
+	game->param.textures[2] = convert(game, game->map.EA_text_path);
+	game->param.textures[3] = convert(game, game->map.WE_text_path);
 }
 
 void	init_texture_image(t_game *game, t_tmpimg *img, char *path)
@@ -44,7 +46,7 @@ void	init_texture_image(t_game *game, t_tmpimg *img, char *path)
 			&img->endian);
 }
 
-int *convert(t_game *game, char *path)
+int	*convert(t_game *game, char *path)
 {
 	t_tmpimg	img;
 	int			*buffer;
@@ -68,25 +70,21 @@ int *convert(t_game *game, char *path)
 		y++;
 	}
 	mlx_destroy_image(game->mlx_init, img.img);
-	return (buffer);	
+	return (buffer);
 }
 
 void	init_game(t_file *file, t_game *game)
 {
-	file->width = get_width(file->map);
-	file->height = get_height(file->map);
-	game->player.posX = file->start_x + 0.5;
-	game->player.posY = file->start_y + 0.5;
-	game->player.mapX = file->start_x;
-	game->player.mapY = file->start_y;
-	game->ray.distance = 0;
+	game->player.posx = file->start_x + 0.5;
+	game->player.posy = file->start_y + 0.5;
+	game->player.mapx = file->start_x;
+	game->player.mapy = file->start_y;
 	game->ray.hit = 0;
 	game->mlx_init = mlx_init();
-	if(!game->mlx_init)
+	if (!game->mlx_init)
 		parse_error("NAUUUR\n", file);
-	game->delta.time = 0;
-	game->delta.oldTime = 0;
-	game->player.dirX = 0;
-	game->player.dirY = 0;
-	set_direction(game->map.orientation, &game->player.dirX, &game->player.dirY, game);
+	game->player.dirx = 0;
+	game->player.diry = 0;
+	set_direction(game->map.orientation, &game->player.dirx, &game->player.diry,
+		game);
 }

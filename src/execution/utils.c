@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:42:05 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/28 14:42:35 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	render_and_display_image(t_game *game)
@@ -39,9 +51,6 @@ void	init_image(t_game *game, t_tmpimg *img)
 
 void	set_image(t_game *game, t_tmpimg *img, int x, int y)
 {
-	// printf("lol\n");
-	// printf("game->param.textures_p[y][x] --> %i\n",
-		// game->param.textures_p[y][x]);
 	if (game->param.textures_p[y][x] > 0)
 		put_pixel(img, x, y, game->param.textures_p[y][x]);
 	else if (y < S_H / 2)
@@ -52,8 +61,26 @@ void	set_image(t_game *game, t_tmpimg *img, int x, int y)
 
 void	put_pixel(t_tmpimg *img, int x, int y, int color)
 {
-	int pixel;
+	int	pixel;
 
 	pixel = y * (img->sl / 4) + x;
 	img->addr[pixel] = color;
+}
+
+void	init_textures_p(t_game *game)
+{
+	int	i;
+
+	game->param.textures_p = ft_calloc(S_H + 1, sizeof(game->param.textures_p));
+	if (!game->param.textures_p)
+		close_window(game);
+	i = 0;
+	while (i < S_H)
+	{
+		game->param.textures_p[i] = ft_calloc(S_W + 1,
+				sizeof(game->param.textures_p));
+		if (!game->param.textures_p[i])
+			close_window(game);
+		i++;
+	}
 }

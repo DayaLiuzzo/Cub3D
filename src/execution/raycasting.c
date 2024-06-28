@@ -1,22 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dliuzzo <dliuzzo@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 14:11:52 by dliuzzo           #+#    #+#             */
+/*   Updated: 2024/06/28 15:19:59 by dliuzzo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	get_tex_pos(t_game *game)
 {
 	if (game->ray.side == 0)
 	{
-		if (game->ray.DirX < 0)
+		if (game->ray.dirx < 0)
 			game->directions = 3;
 		else
 			game->directions = 2;
 	}
 	else
 	{
-		if (game->ray.DirY > 0)
+		if (game->ray.diry > 0)
 			game->directions = 1;
 		else
 			game->directions = 0;
 	}
 }
+
 void	raycasting(t_game *game)
 {
 	int	x;
@@ -34,36 +47,16 @@ void	raycasting(t_game *game)
 	}
 }
 
-void	print_intab(int **buffer, int height, int width)
-{
-	int i, j;
-	for (i = 0; i < height; i++)
-	{
-		for (j = 0; j < width; j++)
-		{
-			printf("%d ", buffer[i][j]);
-		}
-		printf("\n");
-	}
-}
-
 void	set_stripe_len(t_game *game)
 {
-	game->camera.lineheight = (int)(S_H / game->ray.perpWallDist);
-	game->camera.drawStart = -(game->camera.lineheight / 2) + (S_H / 2);
-	if (game->camera.drawStart < 0)
-		game->camera.drawStart = 0;
-	game->camera.drawEnd = (game->camera.lineheight / 2) + (S_H / 2);
-	if (game->camera.drawEnd >= S_H)
-		game->camera.drawEnd = S_H - 1;
+	game->camera.lineheight = (int)(S_H / game->ray.perpwalldist);
+	game->camera.drawstart = -(game->camera.lineheight / 2) + (S_H / 2);
+	if (game->camera.drawstart < 0)
+		game->camera.drawstart = 0;
+	game->camera.drawend = (game->camera.lineheight / 2) + (S_H / 2);
+	if (game->camera.drawend >= S_H)
+		game->camera.drawend = S_H - 1;
 	get_wallx(game);
-}
-
-void	handle_user_input(t_game *game)
-{
-	mlx_hook(game->mlx_win, ClientMessage, NoEventMask, &close_window, game);
-	mlx_hook(game->mlx_win, KeyPress, KeyPressMask, key_press, game);
-	mlx_hook(game->mlx_win, KeyRelease, KeyReleaseMask, key_release, game);
 }
 
 int	image_display_loop(t_game *game)
@@ -106,22 +99,4 @@ void	start_game(t_game *game)
 	free(game->param.textures_p);
 	mlx_loop_hook(game->mlx_init, &image_display_loop, game);
 	mlx_loop(game->mlx_init);
-}
-
-void	init_textures_p(t_game *game)
-{
-	int i;
-
-	game->param.textures_p = ft_calloc(S_H + 1, sizeof(game->param.textures_p));
-	if (!game->param.textures_p)
-		close_window(game);
-	i = 0;
-	while (i < S_H)
-	{
-		game->param.textures_p[i] = ft_calloc(S_W + 1,
-				sizeof(game->param.textures_p));
-		if (!game->param.textures_p[i])
-			close_window(game);
-		i++;
-	}
 }

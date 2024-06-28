@@ -27,7 +27,8 @@ SRCS	=	$(addprefix $Sparsing/, \
 				parse_map.c \
 				convert_hexa.c \
 				init.c \
-				check_map.c) \
+				check_map.c \
+				error_2.c) \
 			$(addprefix $Sexecution/, \
 				dda.c \
 				raycasting.c \
